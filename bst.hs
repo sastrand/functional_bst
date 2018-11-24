@@ -11,6 +11,13 @@ bstInsert (Node l a r) b
     | b < a  = Node (bstInsert l b) a r
 
 -- search (read)
+bstSearch :: (Ord a) => BST a -> a -> Bool
+bstSearch EmptyLeaf a = False
+bstSearch (Node l a r) b
+    | b == a = True
+    | b /= a = (bstSearch l b) || (bstSearch r b)
+
+-- isBST
 
 -- remove (delete)
 
