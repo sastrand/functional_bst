@@ -19,10 +19,12 @@ bstSearch (Node l a r) b
 
 -- check if a binary tree is a BST
 largestChild :: (Ord a) => BST a -> a
-largestChild (Node EmptyLeaf a EmptyLeaf) = a
-largestChild (Node l a EmptyLeaf) = a
-largestChild (Node EmptyLeaf a r) = largestChild r
-largestChild (Node l a r) = largestChild r
+largestChild t =
+    case t of 
+        Node EmptyLeaf a EmptyLeaf -> a
+        Node l a EmptyLeaf         -> a
+        Node EmptyLeaf a r         -> largestChild r
+        Node l a r                 -> largestChild r
 
 
 -- remove (delete)
