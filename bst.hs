@@ -17,7 +17,13 @@ bstSearch (Node l a r) b
     | b == a = True
     | b /= a = (bstSearch l b) || (bstSearch r b)
 
--- isBST
+-- check if a binary tree is a BST
+largestChild :: (Ord a) => BST a -> a
+largestChild (Node EmptyLeaf a EmptyLeaf) = a
+largestChild (Node l a EmptyLeaf) = a
+largestChild (Node EmptyLeaf a r) = largestChild r
+largestChild (Node l a r) = largestChild r
+
 
 -- remove (delete)
 
