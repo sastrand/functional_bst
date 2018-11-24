@@ -1,6 +1,7 @@
 module BST where
 
-data BST a = EmptyLeaf | Node (BST a) a (BST a) deriving Show
+data BST a = EmptyLeaf 
+           | Node (BST a) a (BST a) deriving Show
 
 -- insert value (create, update)
 bstInsert :: (Ord a) => BST a -> a -> BST a
@@ -17,7 +18,15 @@ bstSearch (Node l a r) b
     | b == a = True
     | b /= a = (bstSearch l b) || (bstSearch r b)
 
--- remove value (delete) using zippers
+-- remove value (delete)
+bstPopLargest :: (Ord a) => BST a -> (BST a, a)
+bstPopLargest b =
+    case b of 
+        EmptyLeaf          -> error "Can't pop from empty tree"
+        Node EmptyLeaf a EmptyLeaf -> (EmptyLeaf, a)
+        Node l a EmptyLeaf -> (l, a)
+        Node l b r         -> (Node l b r', x) where 
+            (r', x) = bstPopLargest(r)
 
 -- convert in-order to list
 
