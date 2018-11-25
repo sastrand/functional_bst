@@ -1,4 +1,5 @@
-module BST where
+module BST (BST(..), bstInsert, bstSearch, bstRemove, bstInOrder, 
+            bstPreOrder, bstPostOrder, bstCreateFromList) where
 
 data BST a = EmptyLeaf 
            | Node (BST a) a (BST a) deriving Show
@@ -23,8 +24,8 @@ bstPopLargest :: (Ord a) => BST a -> (BST a, a)
 bstPopLargest b =
     case b of 
         Node EmptyLeaf a EmptyLeaf -> (EmptyLeaf, a)
-        Node l a EmptyLeaf -> (l, a)
-        Node l b r         -> (Node l b r', x) where 
+        Node l a EmptyLeaf         -> (l, a)
+        Node l b r                 -> (Node l b r', x) where 
             (r', x) = bstPopLargest(r)
 
 bstRemove :: (Ord a) => BST a -> a -> BST a
@@ -35,7 +36,7 @@ bstRemove (Node l a r) b
     | b == a = case (l, r) of
         (EmptyLeaf, _) -> r 
         (_, EmptyLeaf) -> Node l' x EmptyLeaf
-        (_, _)   -> Node l' x r
+        (_, _)         -> Node l' x r
   where 
     (l', x) = bstPopLargest(l)
 
@@ -73,7 +74,7 @@ bstPostOrder t =
 bstCreateFromList :: (Ord a) => [a] -> BST a
 bstCreateFromList l = 
     case l of
-        [] -> EmptyLeaf
+        []   -> EmptyLeaf
         x:[] -> Node EmptyLeaf x EmptyLeaf
         x:xs -> foldl bstInsert (Node EmptyLeaf x EmptyLeaf) xs
 
