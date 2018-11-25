@@ -28,6 +28,18 @@ bstPopLargest b =
         Node l b r         -> (Node l b r', x) where 
             (r', x) = bstPopLargest(r)
 
+bstRemove :: (Ord a) => BST a -> a -> BST a
+bstRemove EmptyLeaf a = EmptyLeaf
+bstRemove (Node l a r) b
+    | b > a  = Node l a (bstRemove r b)
+    | b < a  = Node (bstRemove l b) a r
+    | b == a = case (l, r) of
+        (EmptyLeaf, _) -> r 
+        (_, EmptyLeaf) -> Node l' x EmptyLeaf
+        (_, _)   -> Node l' x r
+  where 
+    (l', x) = bstPopLargest(l)
+
 -- convert in-order to list
 
 -- convert pre-order to list
