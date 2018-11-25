@@ -70,3 +70,10 @@ bstPostOrder t =
         Node l a r -> bstPostOrder(l) ++ bstPostOrder(r) ++ [a]
 
 -- convert list to BST
+bstCreateFromList :: (Ord a) => [a] -> BST a
+bstCreateFromList l = 
+    case l of
+        [] -> EmptyLeaf
+        x:[] -> Node EmptyLeaf x EmptyLeaf
+        x:xs -> foldl bstInsert (Node EmptyLeaf x EmptyLeaf) xs
+
