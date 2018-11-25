@@ -22,7 +22,6 @@ bstSearch (Node l a r) b
 bstPopLargest :: (Ord a) => BST a -> (BST a, a)
 bstPopLargest b =
     case b of 
-        EmptyLeaf          -> error "Can't pop from empty tree"
         Node EmptyLeaf a EmptyLeaf -> (EmptyLeaf, a)
         Node l a EmptyLeaf -> (l, a)
         Node l b r         -> (Node l b r', x) where 
@@ -41,9 +40,33 @@ bstRemove (Node l a r) b
     (l', x) = bstPopLargest(l)
 
 -- convert in-order to list
+bstInOrder :: (Ord a) => BST a -> [a]
+bstInOrder t =
+    case t of 
+        EmptyLeaf -> []
+        Node EmptyLeaf a EmptyLeaf -> [a]
+        Node l a EmptyLeaf -> bstInOrder(l) ++ [a]
+        Node EmptyLeaf a r -> bstInOrder(r) ++ [a]
+        Node l a r -> bstInOrder(l) ++ [a] ++ bstInOrder(r)
 
 -- convert pre-order to list
+bstPreOrder :: (Ord a) => BST a -> [a]
+bstPreOrder t =
+    case t of 
+        EmptyLeaf -> []
+        Node EmptyLeaf a EmptyLeaf -> [a]
+        Node l a EmptyLeaf -> [a] ++ bstPreOrder(l)
+        Node EmptyLeaf a r -> [a] ++ bstPreOrder(r)
+        Node l a r -> [a] ++ bstPreOrder(l) ++ bstPreOrder(r)
 
 -- convert post-order to list
+bstPostOrder :: (Ord a) => BST a -> [a]
+bstPostOrder t =
+    case t of 
+        EmptyLeaf -> []
+        Node EmptyLeaf a EmptyLeaf -> [a]
+        Node l a EmptyLeaf -> [a] ++ bstPostOrder(l)
+        Node EmptyLeaf a r -> [a] ++ bstPostOrder(r)
+        Node l a r -> bstPostOrder(l) ++ bstPostOrder(r) ++ [a]
 
 -- convert list to BST
